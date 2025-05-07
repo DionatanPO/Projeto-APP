@@ -42,11 +42,12 @@ class AppNavigationBar extends StatelessWidget {
     if (isWide) {
       // Layout com NavigationRail (ideal para desktop)
       return NavigationRail(
+        indicatorColor: selectedColor.withOpacity(0.8),
         selectedIndex: currentIndex,
         onDestinationSelected: onDestinationSelected,
         labelType: NavigationRailLabelType.all,
         backgroundColor: theme.colorScheme.surface.withOpacity(0.02),
-        selectedIconTheme: IconThemeData(color: selectedColor),
+        selectedIconTheme: IconThemeData(color: Colors.white),
         unselectedIconTheme: IconThemeData(color: unselectedColor),
         selectedLabelTextStyle: theme.textTheme.bodySmall!.copyWith(color: selectedColor),
         unselectedLabelTextStyle: theme.textTheme.bodySmall!.copyWith(color: unselectedColor),
@@ -64,12 +65,12 @@ class AppNavigationBar extends StatelessWidget {
       // Layout com NavigationBar (mobile/tablet)
       return NavigationBarTheme(
         data: NavigationBarThemeData(
-          indicatorColor: selectedColor.withOpacity(0.2),
+          indicatorColor: selectedColor.withOpacity(0.8),
           backgroundColor: theme.colorScheme.surface.withOpacity(0.02),
           iconTheme: MaterialStateProperty.resolveWith((states) {
             return IconThemeData(
               color: states.contains(MaterialState.selected)
-                  ? selectedColor
+                  ? Colors.white
                   : unselectedColor,
             );
           }),

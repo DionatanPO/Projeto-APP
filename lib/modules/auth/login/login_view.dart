@@ -30,143 +30,160 @@ class _LoginViewState extends State<LoginView> {
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 500),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      Icon(Icons.lock_outline, size: 72, color: cs.primary),
-                      const SizedBox(height: 16),
-                      Text(
-                        'Bem-vindo de volta',
-                        style: theme.textTheme.displayLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: cs.onBackground,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 32),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final isWide = constraints.maxWidth >= 800;
 
-                      // Email
-                      TextFormField(
-                        controller: _emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          labelStyle: GoogleFonts.roboto(color: cs.onSurface),
-                          filled: true,
-                          fillColor: cs.surfaceVariant,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
-                          ),
-                          prefixIcon:
-                          Icon(Icons.email_outlined, color: cs.primary),
-                        ),
-                        validator: (v) =>
-                        (v == null || v.isEmpty) ? 'Informe o email' : null,
+            return Row(
+              children: [
+                if (isWide)
+                  Expanded(
+                    child: Container(
+                      color: cs.surfaceVariant,
+                      child: Center(
+                        child: Icon(Icons.security, size: 200, color: cs.primary),
                       ),
-                      const SizedBox(height: 16),
+                    ),
+                  ),
+                Expanded(
+                  child: Center(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 500),
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              Icon(Icons.lock_outline, size: 72, color: cs.primary),
+                              const SizedBox(height: 16),
+                              Text(
+                                'Bem-vindo de volta',
+                                style: theme.textTheme.displayLarge?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: cs.onBackground,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 32),
 
-                      // Senha
-                      TextFormField(
-                        controller: _passwordController,
-                        obscureText: _obscurePassword,
-                        decoration: InputDecoration(
-                          labelText: 'Senha',
-                          labelStyle: GoogleFonts.roboto(color: cs.onSurface),
-                          filled: true,
-                          fillColor: cs.surfaceVariant,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
-                          ),
-                          prefixIcon:
-                          Icon(Icons.lock_outline, color: cs.primary),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _obscurePassword
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              color: cs.primary,
-                            ),
-                            onPressed: () => setState(
-                                    () => _obscurePassword = !_obscurePassword),
-                          ),
-                        ),
-                        validator: (v) => (v == null || v.length < 6)
-                            ? 'Mínimo 6 caracteres'
-                            : null,
-                      ),
-                      const SizedBox(height: 8),
+                              // Email
+                              TextFormField(
+                                controller: _emailController,
+                                keyboardType: TextInputType.emailAddress,
+                                decoration: InputDecoration(
+                                  labelText: 'Email',
+                                  labelStyle: GoogleFonts.roboto(color: cs.onSurface),
+                                  filled: true,
+                                  fillColor: cs.surfaceVariant,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  prefixIcon: Icon(Icons.email_outlined, color: cs.primary),
+                                ),
+                                validator: (v) =>
+                                (v == null || v.isEmpty) ? 'Informe o email' : null,
+                              ),
+                              const SizedBox(height: 16),
 
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            'Esqueci minha senha',
-                            style: GoogleFonts.roboto(color: cs.primary),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 24),
+                              // Senha
+                              TextFormField(
+                                controller: _passwordController,
+                                obscureText: _obscurePassword,
+                                decoration: InputDecoration(
+                                  labelText: 'Senha',
+                                  labelStyle: GoogleFonts.roboto(color: cs.onSurface),
+                                  filled: true,
+                                  fillColor: cs.surfaceVariant,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  prefixIcon: Icon(Icons.lock_outline, color: cs.primary),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      _obscurePassword
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                      color: cs.primary,
+                                    ),
+                                    onPressed: () => setState(
+                                            () => _obscurePassword = !_obscurePassword),
+                                  ),
+                                ),
+                                validator: (v) => (v == null || v.length < 6)
+                                    ? 'Mínimo 6 caracteres'
+                                    : null,
+                              ),
+                              const SizedBox(height: 8),
 
-                      // Botão Entrar
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: _login,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: cs.primary,
-                            foregroundColor: cs.onPrimary,
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            elevation: 4,
-                          ),
-                          child: Text(
-                            'Entrar',
-                            style:
-                            GoogleFonts.roboto(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: TextButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    'Esqueci minha senha',
+                                    style: GoogleFonts.roboto(color: cs.primary),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 24),
 
-                      // Botão Criar Conta
-                      SizedBox(
-                        width: double.infinity,
-                        child: OutlinedButton(
-                          onPressed: () => Get.toNamed(AppRoutes.register),
-                          style: OutlinedButton.styleFrom(
-                            side: BorderSide(color: cs.primary),
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                          child: Text(
-                            'Criar uma conta',
-                            style: GoogleFonts.roboto(
-                              color: cs.primary,
-                              fontWeight: FontWeight.w500,
-                            ),
+                              // Botão Entrar
+                              SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: _login,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: cs.primary,
+                                    foregroundColor: cs.onPrimary,
+                                    padding: const EdgeInsets.symmetric(vertical: 16),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    elevation: 4,
+                                  ),
+                                  child: Text(
+                                    'Entrar',
+                                    style:
+                                    GoogleFonts.roboto(fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+
+                              // Botão Criar Conta
+                              SizedBox(
+                                width: double.infinity,
+                                child: OutlinedButton(
+                                  onPressed: () => Get.toNamed(AppRoutes.register),
+                                  style: OutlinedButton.styleFrom(
+                                    side: BorderSide(color: cs.primary),
+                                    padding: const EdgeInsets.symmetric(vertical: 16),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    'Criar uma conta',
+                                    style: GoogleFonts.roboto(
+                                      color: cs.primary,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
+              ],
+            );
+          },
         ),
       ),
     );

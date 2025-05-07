@@ -54,7 +54,6 @@ class CustomSliverAppBar extends StatelessWidget {
                 ),
               ),
             ),
-
             if (subtitle != null) ...[
               const SizedBox(height: 4),
               MediaQuery(
@@ -67,7 +66,6 @@ class CustomSliverAppBar extends StatelessWidget {
                 ),
               ),
             ],
-
           ],
         ),
       ),

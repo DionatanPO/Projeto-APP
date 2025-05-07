@@ -14,30 +14,74 @@ class HomeView extends StatelessWidget {
     final isWide = MediaQuery.of(context).size.width >= 800;
 
     final pages = [
+      // Página Home com LayoutBuilder
+      LayoutBuilder(
+        builder: (context, constraints) {
+          final width = constraints.maxWidth;
+
+          int columnCount;
+          if (width >= 1200) {
+            columnCount = 4;
+          } else if (width >= 800) {
+            columnCount = 3;
+          } else if (width >= 600) {
+            columnCount = 2;
+          } else {
+            columnCount = 1;
+          }
+
+          return GridView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: 8,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: columnCount,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              childAspectRatio: 1.5,
+            ),
+            itemBuilder: (context, index) {
+              return Card(
+                elevation: 4,
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Card ${index + 1}',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: 12),
+                      ElevatedButton(
+                        onPressed: () {
+                          Get.toNamed(AppRoutes.view);
+                        },
+                        child: const Text('Ver detalhes'),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      ),
+
+      // Página Buscar
       Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Home',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () {
-                Get.toNamed(AppRoutes.view);
-              },
-              child: const Text('Ir para Detalhes'),
-            ),
-          ],
+        child: Text(
+          'Buscar',
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
+
+      // Página Perfil
       Center(
-          child: Text('Buscar',
-              style: Theme.of(context).textTheme.headlineMedium)),
-      Center(
-          child: Text('Perfil',
-              style: Theme.of(context).textTheme.headlineMedium)),
+        child: Text(
+          'Perfil',
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
+      ),
     ];
 
     return Obx(() {
